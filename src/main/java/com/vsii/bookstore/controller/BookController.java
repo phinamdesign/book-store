@@ -6,9 +6,11 @@ import com.vsii.bookstore.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
@@ -39,6 +41,7 @@ public class BookController {
     }
 
     @PostMapping
+//    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> createBook(@Valid @RequestBody Book book) throws IOException {
         bookService.save(book);
         List<Book> books=(List<Book>) bookService.findAll();
