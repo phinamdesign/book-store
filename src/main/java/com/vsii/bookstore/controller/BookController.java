@@ -15,6 +15,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
+import static com.vsii.bookstore.model.Read.readExcel;
 import static com.vsii.bookstore.model.Write.writeExcel;
 
 @CrossOrigin(origins = "*")
@@ -33,11 +34,17 @@ public class BookController {
 
     @GetMapping
     public ResponseEntity<?> getListBook() throws IOException {
+        final String excelFilePath = "D:\\VSI\\jwt/books.xlsx";
+        final String newExcelFilePath = "D:\\VSI\\jwt/newBooks.xlsx";
         List<Book> books=(List<Book>) bookService.findAll();
         if (books.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(books,HttpStatus.OK);
+
+        final List<Book> booksRead = readExcel(excelFilePath);
+
+        writeExcel(booksRead, newExcelFilePath);
+        return new ResponseEntity<>(booksRead,HttpStatus.OK);
     }
 
     @PostMapping
