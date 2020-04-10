@@ -18,7 +18,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/user")
-    public ResponseEntity<?> ListColor(){
+    public ResponseEntity<?> ListUser(){
         List<User> users=(List<User>) userService.findAll();
         if (users.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
